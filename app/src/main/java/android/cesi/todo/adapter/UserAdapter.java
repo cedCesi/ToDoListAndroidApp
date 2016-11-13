@@ -63,7 +63,7 @@ public class UserAdapter extends BaseAdapter {
 
         vh.user.setText(getItem(i).getUserName());
         vh.date.setText(context.getResources().getString(R.string.signed_up)
-                + " " + Tools.SDF.format(getItem(i).getDate()));
+                + " " + Tools.getListDateFormat().format(getItem(i).getDate()));
 
         return view;
     }

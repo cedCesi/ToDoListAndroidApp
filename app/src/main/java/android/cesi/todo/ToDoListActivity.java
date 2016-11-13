@@ -1,7 +1,6 @@
 package android.cesi.todo;
 
 import android.cesi.todo.fragment.ToDoListFragment;
-import android.cesi.todo.helper.PreferenceHelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -31,8 +30,8 @@ public class ToDoListActivity extends AppCompatActivity {
                         startActivity(i);
                         return true;
                     case R.id.menu_to_do_disconnect:
-                        PreferenceHelper.setToken(ToDoListActivity.this, null);
-                        startActivity(new Intent(ToDoListActivity.this, SignInActivity.class));
+                        //startActivity(new Intent(ToDoListActivity.this, SignInActivity.class));
+                        finish();
                         return true;
                     case R.id.menu_to_do_refresh:
                         ((ToDoListFragment) getFragmentManager().findFragmentById(R.id.to_do_fragment)).refresh();

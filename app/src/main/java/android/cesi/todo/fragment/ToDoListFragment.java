@@ -173,7 +173,10 @@ public class ToDoListFragment extends Fragment {
                 String retErr = getResources().getString(R.string.retrieving_data_error);
                 String netErr = getResources().getString(R.string.network_error);
                 String parseErr = getResources().getString(R.string.parsing_error);
-                Tools.getCustomToast(ToDoListFragment.this.getActivity(), retErr + ": " + netErr + " or " + parseErr, Toast.LENGTH_SHORT).show();
+                String or = getResources().getString(R.string.or);
+                Tools.getCustomToast(ToDoListFragment.this.getActivity(),
+                        retErr + ": " + netErr + " " + or + " " + parseErr,
+                        Toast.LENGTH_SHORT).show();
             } else {
                 adapter.setTasks(tasks);
             }

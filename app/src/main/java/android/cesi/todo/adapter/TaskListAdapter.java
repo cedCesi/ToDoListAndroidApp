@@ -72,7 +72,7 @@ public class TaskListAdapter extends BaseAdapter {
         vh.user.setText(getItem(i).getUsername() + " "
                 + context.getResources().getString(R.string.wrote) + " "
                 // date formatting
-                + Tools.SDF.format(getItem(i).getDate()));
+                + Tools.getListDateFormat().format(getItem(i).getDate()));
         vh.note.setText(getItem(i).getNote());
 
         if (getItem(i).getDone()) {

@@ -2,9 +2,8 @@ package android.cesi.todo;
 
 import android.cesi.todo.helper.JsonParser;
 import android.cesi.todo.helper.NetworkHelper;
-import android.cesi.todo.helper.PreferenceHelper;
-import android.cesi.todo.model.HttpResult;
 import android.cesi.todo.helper.Tools;
+import android.cesi.todo.model.HttpResult;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -32,6 +31,12 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        // set the date format used in lists
+        if (Tools.getListDateFormat() == null ) {
+            String listDateFormat = getResources().getString(R.string.list_date_format);
+            Tools.setListDateFormat(listDateFormat);
+        }
 
         username = (EditText) findViewById(R.id.sign_in_name);
         password = (EditText) findViewById(R.id.sign_in_password);
@@ -111,9 +116,7 @@ public class SignInActivity extends AppCompatActivity {
             } else if (token == null) {
                 Tools.getCustomToast(SignInActivity.this, R.string.sign_in_error, Toast.LENGTH_SHORT).show();
             } else {
-                PreferenceHelper.setToken(SignInActivity.this, token);
                 Tools.getCustomToast(SignInActivity.this, R.string.successfully_signed_in, Toast.LENGTH_SHORT).show();
-
                 // set session token
                 Session.getInstance().setToken(token);
                 startActivity(new Intent(context, ToDoListActivity.class));

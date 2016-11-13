@@ -13,7 +13,15 @@ import java.text.SimpleDateFormat;
 
 public class Tools {
 
-    public static final SimpleDateFormat SDF = new SimpleDateFormat("MMMM dd, yyyy 'at' h:mm:ss a");
+    private static SimpleDateFormat LDF = null;
+
+    public static SimpleDateFormat getListDateFormat() {
+        return LDF;
+    }
+
+    public static void setListDateFormat(String pattern) {
+        LDF = new SimpleDateFormat(pattern);
+    }
 
     public static Toast getCustomToast(Context context, int text, int length) {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
