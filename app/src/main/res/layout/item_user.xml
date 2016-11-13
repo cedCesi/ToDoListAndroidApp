@@ -7,7 +7,7 @@
     android:weightSum="5">
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dip"
@@ -18,7 +18,7 @@
         tools:gravity="fill_vertical" />
 
     <TextView
-        android:id="@+id/userdate"
+        android:id="@+id/user_date"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dip"

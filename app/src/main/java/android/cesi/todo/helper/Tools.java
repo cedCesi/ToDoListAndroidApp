@@ -22,7 +22,7 @@ public class Tools {
         Toast toast = new Toast(context);
         toast.setDuration(length);
         toast.setView(layout);
-        TextView textView = (TextView) layout.findViewById(R.id.toast_custom_text);
+        TextView textView = (TextView) layout.findViewById(R.id.toast_content);
         textView.setText(text);
         View view = toast.getView();
         view.setBackgroundResource(R.color.colorAccent);
@@ -38,7 +38,7 @@ public class Tools {
         Toast toast = new Toast(context);
         toast.setDuration(length);
         toast.setView(layout);
-        TextView textView = (TextView) layout.findViewById(R.id.toast_custom_text);
+        TextView textView = (TextView) layout.findViewById(R.id.toast_content);
         textView.setText(text);
         View view = toast.getView();
         view.setBackgroundResource(R.color.colorAccent);

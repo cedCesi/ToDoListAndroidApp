@@ -17,8 +17,10 @@ public class ToDoListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do_list);
-        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
-        drawerLayout = (DrawerLayout) findViewById(R.id.activity_to_do);
+
+        NavigationView nav = (NavigationView) findViewById(R.id.to_do_list_nav_view);
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity_to_do_list);
+
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {

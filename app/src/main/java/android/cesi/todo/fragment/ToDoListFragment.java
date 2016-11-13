@@ -38,11 +38,11 @@ public class ToDoListFragment extends Fragment {
     String token;
     EditText taskToSend;
     ImageButton sendBtn;
-    ListView taskList;
-    TaskListAdapter adapter;
     ImageButton userBtn;
-    GetTasksAsyncTask getTasksAsyncTask;
+    ListView taskList;
     ProgressBar progressBar;
+    TaskListAdapter adapter;
+    GetTasksAsyncTask getTasksAsyncTask;
 
     Timer timer;
     TimerTask task = new TimerTask() {
@@ -75,28 +75,33 @@ public class ToDoListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.fragment_to_do_list, container, false);
 
         token = Session.getInstance().getToken();
-        taskToSend = (EditText) v.findViewById(R.id.to_do_text);
-        taskList = (ListView) v.findViewById(R.id.to_do_list);
+        if (token == null) {
+            Tools.getCustomToast(ToDoListFragment.this.getActivity(), R.string.sign_in_error, Toast.LENGTH_SHORT).show();
+            ToDoListFragment.this.getActivity().finish();
+        }
+
+        taskToSend = (EditText) v.findViewById(R.id.to_do_list_task_to_send);
+        taskList = (ListView) v.findViewById(R.id.to_do_list_listview);
         progressBar = (ProgressBar) v.findViewById(R.id.to_do_list_progress_bar);
-        sendBtn = (ImageButton) v.findViewById(R.id.to_do_send);
+
+        sendBtn = (ImageButton) v.findViewById(R.id.to_do_list_send_button);
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loading(true);
-
                 new SendTaskAsyncTask(v.getContext()).execute(taskToSend.getText().toString());
                 taskToSend.setText("");
             }
         });
 
-        userBtn = (ImageButton) v.findViewById(R.id.user_btn);
+        userBtn = (ImageButton) v.findViewById(R.id.to_do_list_users_button);
         int currentOrientation = getResources().getConfiguration().orientation;
+        // if landscape orientation hide userBtn, else add listener to it
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             userBtn.setVisibility(View.GONE);
         } else {
@@ -108,6 +113,7 @@ public class ToDoListFragment extends Fragment {
                 }
             });
         }
+
         adapter = new TaskListAdapter(inflater.getContext(), this);
         taskList.setAdapter(adapter);
 
@@ -128,6 +134,14 @@ public class ToDoListFragment extends Fragment {
         new UpdateTaskAsyncTask(ToDoListFragment.this.getActivity()).execute(toDoId);
     }
 
+    private void loading(boolean loading) {
+        if (loading) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
     protected class GetTasksAsyncTask extends AsyncTask<Void, Void, List<Task>> {
 
         Context context;
@@ -137,12 +151,13 @@ public class ToDoListFragment extends Fragment {
         }
 
         @Override
-        protected List<Task> doInBackground(Void... params) {
+        protected List<Task> doInBackground(Void... parameters) {
             if (!NetworkHelper.isInternetAvailable(context)) {
                 return null;
             }
 
             HttpResult result = NetworkHelper.doGet(ToDoListFragment.this.getActivity().getString(R.string.to_do_list_url), null, token);
+
             try {
                 return JsonParser.getTasks(result.json);
             } catch (JSONException e) {
@@ -153,8 +168,15 @@ public class ToDoListFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(final List<Task> notes) {
-            adapter.setTasks(notes);
+        protected void onPostExecute(final List<Task> tasks) {
+            if (tasks == null) {
+                String retErr = getResources().getString(R.string.retrieving_data_error);
+                String netErr = getResources().getString(R.string.network_error);
+                String parseErr = getResources().getString(R.string.parsing_error);
+                Tools.getCustomToast(ToDoListFragment.this.getActivity(), retErr + ": " + netErr + " or " + parseErr, Toast.LENGTH_SHORT).show();
+            } else {
+                adapter.setTasks(tasks);
+            }
         }
     }
 
@@ -167,21 +189,25 @@ public class ToDoListFragment extends Fragment {
         }
 
         @Override
-        protected Integer doInBackground(String... parametres) {
+        protected Integer doInBackground(String... parameters) {
             if (!NetworkHelper.isInternetAvailable(context)) {
                 return null;
             }
 
+            // update given task
             Map<String, String> map = new HashMap<>();
             map.put("done", "true");
-            HttpResult result = NetworkHelper.doPost(ToDoListFragment.this.getActivity().getString(R.string.send_note_url) + "/" + parametres[0], map, token);
+            HttpResult result = NetworkHelper.doPost(ToDoListFragment.this.getActivity().getString(R.string.send_note_url) + "/" + parameters[0], map, token);
+
             return result.code;
         }
 
         @Override
         public void onPostExecute(Integer status) {
             loading(false);
-            if (status == 200) {
+            if (status == null) {
+                Tools.getCustomToast(ToDoListFragment.this.getActivity(), R.string.no_network, Toast.LENGTH_SHORT).show();
+            } else if (status == 200) {
                 Tools.getCustomToast(ToDoListFragment.this.getActivity(), R.string.task_updated, Toast.LENGTH_SHORT).show();
             } else {
                 Tools.getCustomToast(ToDoListFragment.this.getActivity(), R.string.task_not_updated, Toast.LENGTH_SHORT).show();
@@ -198,34 +224,29 @@ public class ToDoListFragment extends Fragment {
         }
 
         @Override
-        protected Integer doInBackground(String... parametres) {
+        protected Integer doInBackground(String... parameters) {
             if (!NetworkHelper.isInternetAvailable(context)) {
                 return null;
             }
 
+            // send
             Map<String, String> map = new HashMap<>();
-            map.put("note", parametres[0]);
+            map.put("note", parameters[0]);
             HttpResult result = NetworkHelper.doPost(ToDoListFragment.this.getActivity().getString(R.string.send_note_url), map, token);
+
             return result.code;
         }
 
         @Override
         public void onPostExecute(Integer status) {
             loading(false);
-            if (status == 200) {
+            if (status == null) {
+                Tools.getCustomToast(ToDoListFragment.this.getActivity(), R.string.no_network, Toast.LENGTH_SHORT).show();
+            } else if (status == 200) {
                 Tools.getCustomToast(ToDoListFragment.this.getActivity(), R.string.task_sent, Toast.LENGTH_SHORT).show();
             } else {
                 Tools.getCustomToast(ToDoListFragment.this.getActivity(), R.string.task_not_sent, Toast.LENGTH_SHORT).show();
             }
         }
     }
-
-    private void loading(boolean loading) {
-        if (loading) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.INVISIBLE);
-        }
-    }
-
 }

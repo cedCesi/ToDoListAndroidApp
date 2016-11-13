@@ -5,6 +5,7 @@ import android.cesi.todo.Session;
 import android.cesi.todo.adapter.UserAdapter;
 import android.cesi.todo.helper.JsonParser;
 import android.cesi.todo.helper.NetworkHelper;
+import android.cesi.todo.helper.Tools;
 import android.cesi.todo.model.HttpResult;
 import android.cesi.todo.model.User;
 import android.content.Context;
@@ -42,12 +43,12 @@ public class UserListFragment extends Fragment {
 
         token = Session.getInstance().getToken();
         if (token == null) {
-            Toast.makeText(UserListFragment.this.getActivity(), "Non connecté", Toast.LENGTH_SHORT).show();
+            Tools.getCustomToast(UserListFragment.this.getActivity(), R.string.sign_in_error, Toast.LENGTH_SHORT).show();
             UserListFragment.this.getActivity().finish();
         }
 
         progressBar = (ProgressBar) v.findViewById(R.id.user_list_progress_bar);
-        userList = (ListView) v.findViewById(R.id.user_list);
+        userList = (ListView) v.findViewById(R.id.user_list_listview);
 
         adapter = new UserAdapter(inflater.getContext());
         userList.setAdapter(adapter);
@@ -65,7 +66,6 @@ public class UserListFragment extends Fragment {
     private void loading(boolean loading) {
         if (loading) {
             progressBar.setVisibility(View.VISIBLE);
-
         } else {
             progressBar.setVisibility(View.INVISIBLE);
         }
@@ -80,12 +80,13 @@ public class UserListFragment extends Fragment {
         }
 
         @Override
-        protected List<User> doInBackground(Void... params) {
+        protected List<User> doInBackground(Void... parameters) {
             if (!NetworkHelper.isInternetAvailable(context)) {
                 return null;
             }
 
             HttpResult result = NetworkHelper.doGet(UserListFragment.this.getActivity().getString(R.string.get_users_url), null, token);
+
             try {
                 return JsonParser.getUsers(result.json);
             } catch (JSONException e) {
@@ -98,7 +99,14 @@ public class UserListFragment extends Fragment {
         @Override
         protected void onPostExecute(final List<User> users) {
             loading(false);
-            adapter.setUsers(users);
+            if (users == null) {
+                String retErr = getResources().getString(R.string.retrieving_data_error);
+                String netErr = getResources().getString(R.string.network_error);
+                String parseErr = getResources().getString(R.string.parsing_error);
+                Tools.getCustomToast(UserListFragment.this.getActivity(), retErr + ": " + netErr + " or " + parseErr, Toast.LENGTH_SHORT).show();
+            } else {
+                adapter.setUsers(users);
+            }
         }
     }
 }

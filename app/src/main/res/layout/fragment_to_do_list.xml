@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_to_do"
+    android:id="@+id/fragment_to_do_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/to_do_send"
+        android:id="@+id/to_do_list_send_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -20,11 +20,11 @@
         app:srcCompat="@drawable/ic_check_black_36dp" />
 
     <ListView
-        android:id="@+id/to_do_list"
+        android:id="@+id/to_do_list_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/to_do_send"
-        android:layout_below="@+id/to_do_title"
+        android:layout_above="@+id/to_do_list_send_button"
+        android:layout_below="@+id/to_do_list_title"
         android:layout_marginBottom="15dip"
         android:layout_marginLeft="8dip"
         android:layout_marginRight="8dip"
@@ -32,16 +32,16 @@
         android:paddingTop="5dip" />
 
     <EditText
-        android:id="@+id/to_do_text"
+        android:id="@+id/to_do_list_task_to_send"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/to_do_send"
+        android:layout_alignTop="@+id/to_do_list_send_button"
         android:layout_marginBottom="8dip"
         android:layout_marginLeft="8dip"
-        android:layout_toLeftOf="@+id/to_do_send"
+        android:layout_toLeftOf="@+id/to_do_list_send_button"
         android:background="@color/viewcard_background"
         android:ems="10"
         android:hint="@string/task_hint"
@@ -50,7 +50,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/to_do_title"
+        android:id="@+id/to_do_list_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -69,14 +69,14 @@
         android:textSize="20sp" />
 
     <ImageButton
-        android:id="@+id/user_btn"
+        android:id="@+id/to_do_list_users_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/to_do_title"
-        android:layout_alignEnd="@+id/to_do_list"
-        android:layout_alignRight="@+id/to_do_list"
-        android:layout_alignTop="@+id/to_do_title"
-        android:layout_toRightOf="@+id/to_do_text"
+        android:layout_alignBottom="@+id/to_do_list_title"
+        android:layout_alignEnd="@+id/to_do_list_listview"
+        android:layout_alignRight="@+id/to_do_list_listview"
+        android:layout_alignTop="@+id/to_do_list_title"
+        android:layout_toRightOf="@+id/to_do_list_task_to_send"
         android:background="@color/button_background"
         app:srcCompat="@drawable/ic_people_black_36dp" />
 

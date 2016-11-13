@@ -54,8 +54,8 @@ public class UserAdapter extends BaseAdapter {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             view = inflater.inflate(R.layout.item_user, viewGroup, false);
             vh = new ViewHolder();
-            vh.user = (TextView) view.findViewById(R.id.username);
-            vh.date = (TextView) view.findViewById(R.id.userdate);
+            vh.user = (TextView) view.findViewById(R.id.user_name);
+            vh.date = (TextView) view.findViewById(R.id.user_date);
             view.setTag(vh);
         } else {
             vh = (ViewHolder) view.getTag();

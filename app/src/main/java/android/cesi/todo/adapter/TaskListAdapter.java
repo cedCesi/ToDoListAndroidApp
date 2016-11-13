@@ -3,6 +3,7 @@ package android.cesi.todo.adapter;
 import android.app.Activity;
 import android.cesi.todo.R;
 import android.cesi.todo.fragment.ToDoListFragment;
+import android.cesi.todo.helper.NetworkHelper;
 import android.cesi.todo.model.Task;
 import android.cesi.todo.helper.Tools;
 import android.content.Context;
@@ -59,16 +60,18 @@ public class TaskListAdapter extends BaseAdapter {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             view = inflater.inflate(R.layout.item_task, viewGroup, false);
             vh = new ViewHolder();
-            vh.user = (TextView) view.findViewById(R.id.to_do_user);
-            vh.note = (TextView) view.findViewById(R.id.to_do_text);
-            vh.done = (CheckBox) view.findViewById(R.id.done);
+            vh.user = (TextView) view.findViewById(R.id.task_user_and_date);
+            vh.note = (TextView) view.findViewById(R.id.task_note);
+            vh.done = (CheckBox) view.findViewById(R.id.task_done);
             view.setTag(vh);
         } else {
             vh = (ViewHolder) view.getTag();
         }
 
+        // display user and register date in same TextView
         vh.user.setText(getItem(i).getUsername() + " "
                 + context.getResources().getString(R.string.wrote) + " "
+                // date formatting
                 + Tools.SDF.format(getItem(i).getDate()));
         vh.note.setText(getItem(i).getNote());
 
@@ -86,13 +89,21 @@ public class TaskListAdapter extends BaseAdapter {
 
                 int index = (Integer) view.getTag();
 
-                CheckBox cb = (CheckBox) view.findViewById(R.id.done);
+                CheckBox cb = (CheckBox) view.findViewById(R.id.task_done);
                 // an already done task can't be unchecked
                 if (!cb.isChecked()) {
                     cb.setChecked(true);
                     Tools.getCustomToast(((Activity) context), R.string.no_update_allowed, Toast.LENGTH_SHORT).show();
                 } else {
-                    toDoListFragment.updateTask(TaskListAdapter.this.getItem(index).getId());
+                    // if no network connection, uncheck the checked checkBox
+                    // as it can't be updated on remote server
+                    if (!NetworkHelper.isInternetAvailable(context)) {
+                        Tools.getCustomToast(((Activity) context), R.string.no_update_possible, Toast.LENGTH_SHORT).show();
+                        cb.setChecked(false);
+                    // task done and connected to network, task can be updated
+                    } else {
+                        toDoListFragment.updateTask(TaskListAdapter.this.getItem(index).getId());
+                    }
                 }
             }
         });

@@ -28,10 +28,10 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        username = (EditText) findViewById(R.id.to_do_sign_up_name);
-        password = (EditText) findViewById(R.id.to_do_sign_up_password);
-        newAccountBtn = (Button) findViewById(R.id.to_do_sign_up_new_account);
-        progressBar = (ProgressBar) findViewById(R.id.to_do_sign_up_progress_bar);
+        username = (EditText) findViewById(R.id.sign_up_name);
+        password = (EditText) findViewById(R.id.sign_up_password);
+        newAccountBtn = (Button) findViewById(R.id.sign_up_create_account);
+        progressBar = (ProgressBar) findViewById(R.id.sign_up_progress_bar);
 
         newAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +40,6 @@ public class SignUpActivity extends AppCompatActivity {
                 new ToDoSignUpAsyncTask().execute(username.getText().toString(), password.getText().toString());
             }
         });
-
     }
 
     private void loading(boolean loading) {
@@ -79,7 +78,9 @@ public class SignUpActivity extends AppCompatActivity {
         @Override
         public void onPostExecute(final HttpResult response) {
             loading(false);
-            if (response.code == 200) {
+            if (response == null) {
+                Tools.getCustomToast(SignUpActivity.this, R.string.no_network, Toast.LENGTH_SHORT).show();
+            } else if (response.code == 200) {
                 Tools.getCustomToast(SignUpActivity.this,
                         SignUpActivity.this.getString(R.string.successfully_signed_up),
                         Toast.LENGTH_LONG).show();

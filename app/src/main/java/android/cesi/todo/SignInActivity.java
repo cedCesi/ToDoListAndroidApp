@@ -24,8 +24,8 @@ public class SignInActivity extends AppCompatActivity {
 
     EditText username;
     EditText password;
-    Button connexionBtn;
-    Button newAccountBtn;
+    Button signinBtn;
+    Button signupBtn;
     ProgressBar progressBar;
 
     @Override
@@ -33,14 +33,14 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        username = (EditText) findViewById(R.id.to_do_sign_in_name);
-        password = (EditText) findViewById(R.id.to_do_sign_in_password);
-        connexionBtn = (Button) findViewById(R.id.to_do_sign_in_connexion);
-        newAccountBtn = (Button) findViewById(R.id.to_do_sign_in_new_account);
-        progressBar = (ProgressBar) findViewById(R.id.to_do_sign_in_progress_bar);
+        username = (EditText) findViewById(R.id.sign_in_name);
+        password = (EditText) findViewById(R.id.sign_in_password);
+        signinBtn = (Button) findViewById(R.id.sign_in_connexion);
+        signupBtn = (Button) findViewById(R.id.sign_in_create_account_button);
+        progressBar = (ProgressBar) findViewById(R.id.sign_in_progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        connexionBtn.setOnClickListener(new View.OnClickListener() {
+        signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loading(true);
@@ -48,7 +48,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-        newAccountBtn.setOnClickListener(new View.OnClickListener() {
+        signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), SignUpActivity.class);
@@ -60,12 +60,12 @@ public class SignInActivity extends AppCompatActivity {
     private void loading(boolean loading) {
         if (loading) {
             progressBar.setVisibility(View.VISIBLE);
-            connexionBtn.setVisibility(View.INVISIBLE);
-            newAccountBtn.setVisibility(View.INVISIBLE);
+            signinBtn.setVisibility(View.INVISIBLE);
+            signupBtn.setVisibility(View.INVISIBLE);
         } else {
             progressBar.setVisibility(View.INVISIBLE);
-            connexionBtn.setVisibility(View.VISIBLE);
-            newAccountBtn.setVisibility(View.VISIBLE);
+            signinBtn.setVisibility(View.VISIBLE);
+            signupBtn.setVisibility(View.VISIBLE);
         }
     }
 
@@ -96,6 +96,7 @@ public class SignInActivity extends AppCompatActivity {
                 }
 
                 return null;
+
             } catch (Exception e) {
                 Log.e("NetworkHelper", e.getMessage());
                 return null;
@@ -106,12 +107,14 @@ public class SignInActivity extends AppCompatActivity {
         public void onPostExecute(final String token) {
             loading(false);
             if ("".equals(token)) {
-                Tools.getCustomToast(SignInActivity.this, R.string.no_network_available, Toast.LENGTH_SHORT).show();
+                Tools.getCustomToast(SignInActivity.this, R.string.no_network, Toast.LENGTH_SHORT).show();
             } else if (token == null) {
                 Tools.getCustomToast(SignInActivity.this, R.string.sign_in_error, Toast.LENGTH_SHORT).show();
             } else {
                 PreferenceHelper.setToken(SignInActivity.this, token);
                 Tools.getCustomToast(SignInActivity.this, R.string.successfully_signed_in, Toast.LENGTH_SHORT).show();
+
+                // set session token
                 Session.getInstance().setToken(token);
                 startActivity(new Intent(context, ToDoListActivity.class));
             }
