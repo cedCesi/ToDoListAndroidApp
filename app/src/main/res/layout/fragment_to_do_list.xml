@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_to_do"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/to_do_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:background="@color/button_background"
+        android:padding="5dip"
+        app:srcCompat="@drawable/ic_check_black_36dp" />
+
+    <ListView
+        android:id="@+id/to_do_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/to_do_send"
+        android:layout_below="@+id/to_do_title"
+        android:layout_marginBottom="15dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="15dip"
+        android:paddingTop="5dip" />
+
+    <EditText
+        android:id="@+id/to_do_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/to_do_send"
+        android:layout_marginBottom="8dip"
+        android:layout_marginLeft="8dip"
+        android:layout_toLeftOf="@+id/to_do_send"
+        android:background="@color/viewcard_background"
+        android:ems="10"
+        android:hint="@string/task_hint"
+        android:inputType="textPersonName"
+        android:padding="5dip"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/to_do_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="8dip"
+        android:background="@color/button_background"
+        android:fontFamily="sans-serif-smallcaps"
+        android:padding="12dip"
+        android:text="@string/to_do_list_title"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/user_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/to_do_title"
+        android:layout_alignEnd="@+id/to_do_list"
+        android:layout_alignRight="@+id/to_do_list"
+        android:layout_alignTop="@+id/to_do_title"
+        android:layout_toRightOf="@+id/to_do_text"
+        android:background="@color/button_background"
+        app:srcCompat="@drawable/ic_people_black_36dp" />
+
+    <ProgressBar
+        android:id="@+id/to_do_list_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:layout_centerVertical="true"
+        android:elevation="5dp"
+        android:visibility="gone" />
+
+</RelativeLayout>

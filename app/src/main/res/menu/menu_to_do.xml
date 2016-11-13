@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_to_do_users"
+        android:icon="@android:drawable/ic_menu_more"
+        android:title="@string/user_list_title" />
+
+    <item
+        android:id="@+id/menu_to_do_disconnect"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/disconnect" />
+
+    <item
+        android:id="@+id/menu_to_do_refresh"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:title="@string/refresh" />
+
+</menu>

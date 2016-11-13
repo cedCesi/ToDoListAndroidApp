@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">ToDoListApp</string>
+    <string name="to_do_list_url">http://cesi.cleverapps.io/notes</string>
+    <string name="send_note_url">http://cesi.cleverapps.io/notes</string>
+    <string name="get_users_url">http://cesi.cleverapps.io/users</string>
+    <string name="sign_in_url">http://cesi.cleverapps.io/signin</string>
+    <string name="sign_up_url">http://cesi.cleverapps.io/signup</string>
+    <string name="username_hint">username</string>
+    <string name="password_hint">password</string>
+    <string name="task_hint">new task</string>
+    <string name="create_account">Create account</string>
+    <string name="new_user">New user</string>
+    <string name="create_new_user">Create new user</string>
+    <string name="sign_in">Sign in</string>
+    <string name="already_registered">Already registered ?</string>
+    <string name="successfully_signed_in">You successfully signed in</string>
+    <string name="successfully_signed_up">You successfully signed up</string>
+    <string name="sign_in_error">Login failed. Please check your login and password</string>
+    <string name="sign_up_error">Signup failed</string>
+    <string name="no_network_available">No network available</string>
+    <string name="to_do_list_title">Todo List</string>
+    <string name="user_list_title">User list</string>
+    <string name="no_update_allowed">An already done task cannot be updated</string>
+    <string name="task_updated">Task successfully updated</string>
+    <string name="task_not_updated">Task update failed</string>
+    <string name="task_sent">Task successfully sent</string>
+    <string name="task_not_sent">Error sending task </string>
+    <string name="refresh">Refresh</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="wrote">wrote</string>
+    <string name="signed_up">registered</string>
+</resources>

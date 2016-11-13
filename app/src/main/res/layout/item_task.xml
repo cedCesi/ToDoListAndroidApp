@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/to_do_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="5dip"
+        android:layout_weight="0.65"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_weight="0.07"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/to_do_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.50"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/done"
+            android:layout_width="30dip"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:elevation="1dp"
+            android:paddingLeft="15dip"
+            android:paddingRight="15dip" />
+
+    </LinearLayout>
+
+</LinearLayout>
